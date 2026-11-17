@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>GLBRYX</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">G</div>
+    <div class="brand"><strong>GLBRYX</strong><span>Capture • Convert • Save</span></div>
+    <span class="version">v1.3</span>
+  </header>
+  <main>
+    <section class="intro">
+      <div class="tiny-label">YOUR MODELS • LOCAL PROCESSING</div>
+      <h1>Preview &amp; download for Blender.</h1>
+      <p>Open a Meshy model and let it load. Your captured models appear below. GLB downloads automatically decode Meshopt compression for Blender.</p>
+      <div class="status" id="status">Checking Meshy tabs…</div>
+    </section>
+    <section class="toolbar">
+      <h2>Captured models <span id="counter">0</span></h2>
+      <button class="refresh" id="refresh" aria-label="Refresh list">↻ Refresh</button>
+    </section>
+    <section class="cards" id="cards">
+      <div class="empty">Checking your open Meshy workspace…</div>
+    </section>
+    <div class="helper">Tap a model image or <strong>View in 3D</strong> to inspect and rotate it on the Meshy page. The lightweight preview shows geometry and flat colors; original GLB preserves embedded textures and animations. Meshopt GLBs are decoded locally for preview and Blender-ready downloads.</div>
+    <div class="footer-actions">
+      <button id="openMeshy">Open Meshy</button>
+      <button id="openViewer">Local 3D viewer & converter ↗</button>
+    </div>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

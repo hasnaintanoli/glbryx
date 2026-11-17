@@ -1,0 +1,26 @@
+'use strict';
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+require('../js/glb.js');
+const bytes=fs.readFileSync(__dirname+'/../sample/demo-cube.glb');
+const buffer=bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength);
+const asset=globalThis.GLBModel.parseBuffer(buffer);
+const mesh=globalThis.GLBModel.extractGeometry(asset);
+assert.equal(mesh.faces.length,12);
+assert.equal(mesh.vertices.length,8);
+assert.equal(mesh.meshCount,1);
+assert.deepEqual(mesh.min,[-1,-1,-1]);
+assert.deepEqual(mesh.max,[1,1,1]);
+(async()=>{
+  const obj=await globalThis.GLBModel.makeOBJ(mesh).text();
+  assert.equal((obj.match(/^v /gm)||[]).length,8);
+  assert.equal((obj.match(/^f /gm)||[]).length,12);
+  const stl=await globalThis.GLBModel.makeSTL(mesh).arrayBuffer();
+  assert.equal(stl.byteLength,84+50*12);
+  assert.equal(new DataView(stl).getUint32(80,true),12);
+  const ply=await globalThis.GLBModel.makePLY(mesh).text();
+  assert.match(ply,/element face 12/);
+  const gltf=JSON.parse(await globalThis.GLBModel.makeGLTF(asset).text());
+  assert.match(gltf.buffers[0].uri,/^data:application\/octet-stream;base64,/);
+  console.log('PASS: GLB parser, OBJ, STL, PLY, glTF exports');
+})().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3D Viewer & Converter — GLBRYX</title>
+  <link rel="stylesheet" href="viewer.css" />
+  <script defer src="js/meshopt_reference.js"></script>
+  <script defer src="js/glb.js"></script>
+  <script defer src="viewer.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="identity"><div class="logo">G</div><div><strong>GLBRYX</strong><span>Local 3D Viewer & Converter</span></div></div>
+    <a href="https://www.meshy.ai/" target="_blank" rel="noopener noreferrer" class="meshy-link">Open Meshy AI ↗</a>
+  </header>
+  <main class="layout">
+    <aside class="side-panel">
+      <span class="overline">YOUR ASSET</span>
+      <h1>Preview & export</h1>
+      <p class="description">Choose a GLB you saved from Meshy, including compressed files. Meshopt decompression runs automatically. Processing stays on your device.</p>
+      <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Choose a GLB model file">
+        <span class="upload-icon">⬡</span>
+        <strong>Drop a .glb file here</strong>
+        <small>or click to browse your files</small>
+        <span class="file-badge">GLB 2.0</span>
+      </div>
+      <input id="fileInput" type="file" accept=".glb,model/gltf-binary" hidden />
+      <div id="fileName" class="filename" aria-live="polite">No file selected</div>
+      <div class="separator"></div>
+      <div class="subheading"><h2>Export format</h2><small>Local conversion</small></div>
+      <div class="format-grid">
+        <button class="format-button" data-format="glb"><b>GLB</b><span>Blender ready (auto)</span></button><button class="format-button" data-format="glb-original"><b>Original GLB</b><span>Unmodified backup</span></button>
+        <button class="format-button" data-format="gltf"><b>glTF</b><span>Embedded model data</span></button>
+        <button class="format-button" data-format="obj"><b>OBJ</b><span>Mesh geometry only</span></button>
+        <button class="format-button" data-format="stl"><b>STL</b><span>3D printing geometry</span></button>
+        <button class="format-button" data-format="ply"><b>PLY</b><span>Mesh geometry only</span></button>
+      </div>
+      <div id="status" class="notice" role="status" aria-live="polite">Choose a GLB file to enable downloads.</div>
+      <div class="hint"><strong>Need FBX, BLEND, USDZ, 3MF or DXF?</strong><p>Use Meshy's official Export panel for the formats your plan includes. This offline converter doesn't generate those formats.</p></div>
+    </aside>
+    <section class="stage-panel" aria-label="3D model preview">
+      <div class="stage-head"><div><span class="dot"></span><strong>3D Preview</strong><small id="previewLabel">No model loaded</small></div><div class="controls-hint">Drag to orbit&nbsp; · &nbsp;Scroll to zoom</div></div>
+      <div id="canvasBox" class="canvas-box"><canvas id="previewCanvas"></canvas><div id="canvasPlaceholder" class="placeholder"><span class="placeholder-icon">⬡</span><h2>See your model in 3D</h2><p>Choose a GLB file to inspect its geometry, rotate it, and export compatible formats.</p></div></div>
+      <div class="stage-footer"><div class="stat"><small>TRIANGLES</small><strong id="triangles">—</strong></div><div class="stat"><small>VERTICES</small><strong id="vertices">—</strong></div><div class="stat"><small>MESHES</small><strong id="meshes">—</strong></div><div class="stat"><small>SIZE</small><strong id="fileSize">—</strong></div><button id="resetView" class="reset-button">↺ Reset view</button></div>
+      <p class="underfoot">The preview displays geometry and flat material colors; original GLB/glTF keeps existing embedded textures. OBJ, STL, and PLY exports in this version do not preserve materials, UVs, skeletons or animation. Meshopt-compressed GLBs are decoded automatically; Draco is not supported by this converter.</p>
+    </section>
+  </main>
+</body>
+</html>
