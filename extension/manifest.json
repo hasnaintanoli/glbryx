@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "GLBRYX — 3D Model Capture & Converter",
+  "short_name": "GLBRYX",
+  "version": "1.3.0",
+  "description": "Preview locally captured 3D models, convert GLB, and export Blender-ready models with offline Meshopt/WebP decoding.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "GLBRYX",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meshy.ai/*",
+        "https://*.meshy.ai/*"
+      ],
+      "js": [
+        "page-hook.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://meshy.ai/*",
+        "https://*.meshy.ai/*"
+      ],
+      "js": [
+        "js/meshopt_reference.js",
+        "js/glb.js",
+        "js/preview.js",
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "world": "ISOLATED",
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://meshy.ai/*",
+    "https://*.meshy.ai/*"
+  ]
+}
